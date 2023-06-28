@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Данные файла: {{ filename }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="flex">
+        <h1>Данные файла: {{ filename }}</h1>
+        <a href="/files">Назад</a>
+    </div>
+    <form action="/file/{{ filename }}">
+        <label>Фильтр по колонкам:</label>
+        <select required name="filter_column">
+            <option value="">-- Выберите колонку --</option>
+            {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="filter_value" multiple>
+        <button type="submit">Фильтровать</button>
+    </form>
+    <br>
+    <form action="/file/{{ filename }}">
+        <label>Сортировка по колонкам:</label>
+        {% for column in columns %}
+        <input type="checkbox" name="sort_column" value="{{ column }}"> {{ column }}
+        {% endfor %}
+        <button type="submit">Сортировать</button>
+    </form>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                {% for column in columns %}
+                <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                {% for column in columns %}
+                <td>{{ row[column] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

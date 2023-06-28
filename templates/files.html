@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список файлов</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="flex">
+        <h1>Список файлов</h1>
+        <a href="/">Назад</a>
+    </div>
+    <ul>
+        {% for file_info in files_info %}
+        <li>
+            {{ file_info.filename }}
+            <a href="/file/{{ file_info.filename }}">Просмотр</a>
+            <a href="/delete_file/{{ file_info.filename }}" onclick="return confirm('Вы уверены, что хотите удалить файл?')">Удалить</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
